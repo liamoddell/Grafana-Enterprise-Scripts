@@ -23,13 +23,13 @@ for datasource in $(echo "$DATA" | jq -c '.[]'); do
     response=$(curl -s -o /dev/null -w "%{http_code}" -X GET "$TARGET_DATASOURCES_ENDPOINT/name/$datasource_name" -H "Authorization: Bearer $API_KEY")
     
     if [ "$response" == "200" ]; then
-        echo "Datasource '$datasource_name' already exists in organization. Skipping."
+        echo "Datasource '$datasource_name' already exists in organisation. Skipping."
     else
         curl_response=$(curl -s -X POST "$TARGET_DATASOURCES_ENDPOINT" -H "Authorization: Bearer $API_KEY" -H "Content-Type: application/json" -d "$datasource")
         if [[ $curl_response == *"Datasource added"* ]]; then
-            echo "Datasource '$datasource_name' added to organization."
+            echo "Datasource '$datasource_name' added to organisation."
         else
-            echo "Failed to add datasource '$datasource_name' to organization."
+            echo "Failed to add datasource '$datasource_name' to organisation."
             echo "$curl_response"
         fi
     fi
